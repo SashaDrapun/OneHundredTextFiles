@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 class Program
 {
-    static void Main()
+    private static int totalFiles = 100;
+    private static int completedFiles = 0;
+
+    private static void Main()
     {
         char[] latinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
         char[] russianChars = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя".ToCharArray();
 
-        Parallel.For(0, 100, fileIndex =>
+        Parallel.For(0, totalFiles, fileIndex =>
         {
             string fileName = $"file_{fileIndex + 1}.txt";
             using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
@@ -28,12 +31,17 @@ class Program
                     writer.WriteLine(line);
                 }
             }
+
+            Interlocked.Increment(ref completedFiles);
+            UpdateProgress();
         });
+
+        Console.WriteLine("Все файлы созданы.");
     }
 
-    static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
+    private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
 
-    static string GenerateRandomDate()
+    private static string GenerateRandomDate()
     {
         DateTime startDate = new DateTime(DateTime.Now.Year - 5, 1, 1);
         DateTime endDate = DateTime.Now;
@@ -42,7 +50,7 @@ class Program
         return randomDate.ToString("dd.MM.yyyy");
     }
 
-    static string GenerateRandomString(char[] charSet, int length)
+    private static string GenerateRandomString(char[] charSet, int length)
     {
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++)
@@ -52,13 +60,19 @@ class Program
         return sb.ToString();
     }
 
-    static int GenerateRandomEvenNumber()
+    private static int GenerateRandomEvenNumber()
     {
         return random.Value.Next(1, 50000000) * 2;
     }
 
-    static double GenerateRandomDouble()
+    private static double GenerateRandomDouble()
     {
         return random.Value.NextDouble() * 19 + 1;
+    }
+
+    private static void UpdateProgress()
+    {
+        int progressPercentage = (completedFiles * 100) / totalFiles;
+        Console.WriteLine($"Прогресс: {progressPercentage}% ({completedFiles}/{totalFiles})");
     }
 }
