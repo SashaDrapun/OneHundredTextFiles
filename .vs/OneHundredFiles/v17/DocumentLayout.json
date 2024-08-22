@@ -5,6 +5,9 @@
     {
       "AbsoluteMoniker": "D:0:0:{141C3D5D-B8D5-4319-9223-DAE23B64CE9D}|OneHundredFiles.csproj|h:\\c#projects\\onehundredtextfiles\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{141C3D5D-B8D5-4319-9223-DAE23B64CE9D}|OneHundredFiles.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39DAD123-EB51-410B-8E1E-B2F8A630E44F}|..\\UnitTestProject\\UnitTestProject.csproj|h:\\c#projects\\unittestproject\\programtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,12 +17,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,9 +27,22 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "H:\\C#Projects\\OneHundredTextFiles\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAACkAAAAAAAAAAAAkwEgAAAAYAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-22T14:11:22.446Z",
+              "WhenOpened": "2024-08-22T15:42:45.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProgramTests.cs",
+              "DocumentMoniker": "H:\\C#Projects\\UnitTestProject\\ProgramTests.cs",
+              "RelativeDocumentMoniker": "..\\UnitTestProject\\ProgramTests.cs",
+              "ToolTip": "H:\\C#Projects\\UnitTestProject\\ProgramTests.cs",
+              "RelativeToolTip": "..\\UnitTestProject\\ProgramTests.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwCIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-22T14:52:37.876Z",
               "EditorCaption": ""
             }
           ]

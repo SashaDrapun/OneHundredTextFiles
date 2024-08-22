@@ -6,3 +6,16 @@ bin/Debug/OneHundredFiles.pdb
 obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 .vs/OneHundredFiles/FileContentIndex/5aa77383-1f38-469f-b303-b12e85baae23.vsidx
 *.vsidx
+*.v2
+.vs/OneHundredFiles.csproj.dtbcache.json
+.vs/OneHundredFiles/v17/TestStore/0/testlog.manifest
+*.bin
+*.dll
+*.config
+bin/Debug/net8.0/OneHundredFiles.pdb
+*.cache
+obj/project.assets.json
+*.targets
+*.props
+*.json
+obj/Debug/net8.0/OneHundredFiles.csproj.BuildWithSkipAnalyzers

@@ -4,75 +4,79 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-class Program
+namespace OneHundredFiles
 {
-    private static int totalFiles = 100;
-    private static int completedFiles = 0;
-
-    private static void Main()
+    public class Program
     {
-        char[] latinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
-        char[] russianChars = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя".ToCharArray();
+        private static int totalFiles = 100;
+        private static int completedFiles = 0;
 
-        Parallel.For(0, totalFiles, fileIndex =>
+        public static void Main()
         {
-            string fileName = $"file_{fileIndex + 1}.txt";
-            using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
+            char[] latinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".ToCharArray();
+            char[] russianChars = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя".ToCharArray();
+
+            Parallel.For(0, totalFiles, fileIndex =>
             {
-                for (int lineIndex = 0; lineIndex < 100000; lineIndex++)
+                string fileName = $"file_{fileIndex + 1}.txt";
+                using (StreamWriter writer = new StreamWriter(fileName, false, Encoding.UTF8))
                 {
-                    string date = GenerateRandomDate();
-                    string latinString = GenerateRandomString(latinChars, 10);
-                    string russianString = GenerateRandomString(russianChars, 10);
-                    int evenNumber = GenerateRandomEvenNumber();
-                    double randomDouble = GenerateRandomDouble();
+                    for (int lineIndex = 0; lineIndex < 100000; lineIndex++)
+                    {
+                        string date = GenerateRandomDate();
+                        string latinString = GenerateRandomString(latinChars, 10);
+                        string russianString = GenerateRandomString(russianChars, 10);
+                        int evenNumber = GenerateRandomEvenNumber();
+                        double randomDouble = GenerateRandomDouble();
 
-                    string line = $"{date}||{latinString}||{russianString}||{evenNumber}||{randomDouble:F8}||";
-                    writer.WriteLine(line);
+                        string line = $"{date}||{latinString}||{russianString}||{evenNumber}||{randomDouble:F8}||";
+                        writer.WriteLine(line);
+                    }
                 }
-            }
 
-            Interlocked.Increment(ref completedFiles);
-            UpdateProgress();
-        });
+                Interlocked.Increment(ref completedFiles);
+                UpdateProgress();
+            });
 
-        Console.WriteLine("Все файлы созданы.");
-    }
-
-    private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
-
-    private static string GenerateRandomDate()
-    {
-        DateTime startDate = new DateTime(DateTime.Now.Year - 5, 1, 1);
-        DateTime endDate = DateTime.Now;
-        int range = (endDate - startDate).Days;
-        DateTime randomDate = startDate.AddDays(random.Value.Next(range));
-        return randomDate.ToString("dd.MM.yyyy");
-    }
-
-    private static string GenerateRandomString(char[] charSet, int length)
-    {
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
-        {
-            sb.Append(charSet[random.Value.Next(charSet.Length)]);
+            Console.WriteLine("Все файлы созданы.");
         }
-        return sb.ToString();
-    }
 
-    private static int GenerateRandomEvenNumber()
-    {
-        return random.Value.Next(1, 50000000) * 2;
-    }
+        private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
 
-    private static double GenerateRandomDouble()
-    {
-        return random.Value.NextDouble() * 19 + 1;
-    }
+        public static string GenerateRandomDate()
+        {
+            DateTime startDate = new DateTime(DateTime.Now.Year - 5, 1, 1);
+            DateTime endDate = DateTime.Now;
+            int range = (endDate - startDate).Days;
+            DateTime randomDate = startDate.AddDays(random.Value.Next(range));
+            return randomDate.ToString("dd.MM.yyyy");
+        }
 
-    private static void UpdateProgress()
-    {
-        int progressPercentage = (completedFiles * 100) / totalFiles;
-        Console.WriteLine($"Прогресс: {progressPercentage}% ({completedFiles}/{totalFiles})");
+        public static string GenerateRandomString(char[] charSet, int length)
+        {
+            StringBuilder sb = new StringBuilder(length);
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(charSet[random.Value.Next(charSet.Length)]);
+            }
+            return sb.ToString();
+        }
+
+        public static int GenerateRandomEvenNumber()
+        {
+            return random.Value.Next(1, 50000000) * 2;
+        }
+
+        public static double GenerateRandomDouble()
+        {
+            return random.Value.NextDouble() * 19 + 1;
+        }
+
+        public static void UpdateProgress()
+        {
+            int progressPercentage = (completedFiles * 100) / totalFiles;
+            Console.WriteLine($"Прогресс: {progressPercentage}% ({completedFiles}/{totalFiles})");
+        }
     }
 }
+
