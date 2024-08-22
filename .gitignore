@@ -1,0 +1,6 @@
+
+*.txt
+obj/Debug/OneHundredFiles.csproj.CoreCompileInputs.cache
+bin/Debug/OneHundredFiles.pdb
+.vs/OneHundredFiles/FileContentIndex/aa1cbdee-d3fc-4b83-9577-7e4f66df5225.vsidx
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
