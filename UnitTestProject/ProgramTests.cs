@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using OneHundredFiles;
+using System.Data.SqlClient;
 
 namespace OneHundredFiles.Tests
 {
@@ -73,10 +74,10 @@ namespace OneHundredFiles.Tests
         }
 
         [Test]
-        public void MergeFilesAndRemoveLines_ShouldRemoveLinesWithPattern()
+        public async Task MergeFilesAndRemoveLines_ShouldRemoveLinesWithPattern()
         {
             // Создаем временные файлы для теста
-            string[] fileNames = { "test_file_1.txt", "test_file_2.txt" };
+            string[] fileNames = { "file_1.txt", "file_2.txt" };
             string patternToRemove = "abc";
             string outputFileName = "combined_test_file.txt";
 
@@ -85,7 +86,7 @@ namespace OneHundredFiles.Tests
             File.WriteAllLines(fileNames[1], new[] { "jkl012", "mno345", "abc678" });
 
             // Вызываем метод объединения и удаления строк
-            int removedLinesCount = Program.MergeFilesAndRemoveLines(outputFileName, patternToRemove);
+            int removedLinesCount = await Program.MergeFilesAndRemoveLines(outputFileName, patternToRemove);
 
             // Проверяем количество удаленных строк
             Assert.That(removedLinesCount, Is.EqualTo(2));
@@ -104,5 +105,73 @@ namespace OneHundredFiles.Tests
             File.Delete(fileNames[1]);
             File.Delete(outputFileName);
         }
+        [Test]
+        public async Task MergeFilesAndRemoveLines_ShouldHandleEmptyFiles()
+        {
+            // Создаем временные файлы для теста
+            string[] fileNames = { "file_1.txt", "file_2.txt" };
+            string patternToRemove = "abc";
+            string outputFileName = "combined_test_file.txt";
+
+            // Создаем пустые файлы
+            File.WriteAllText(fileNames[0], string.Empty);
+            File.WriteAllText(fileNames[1], string.Empty);
+
+            // Вызываем метод объединения и удаления строк
+            int removedLinesCount = await Program.MergeFilesAndRemoveLines(outputFileName, patternToRemove);
+
+            // Проверяем количество удаленных строк
+            Assert.That(removedLinesCount, Is.EqualTo(0));
+
+            // Проверяем содержимое объединенного файла
+            string[] combinedLines = File.ReadAllLines(outputFileName);
+            Assert.That(combinedLines.Length, Is.EqualTo(0));
+
+            // Удаляем временные файлы
+            File.Delete(fileNames[0]);
+            File.Delete(fileNames[1]);
+            File.Delete(outputFileName);
+        }
+
+
+        [Test]
+        public async Task MergeFilesAndRemoveLines_ShouldHandleNonExistentPattern()
+        {
+            // Создаем временные файлы для теста
+            string[] fileNames = { "file_1.txt", "file_2.txt" };
+            string patternToRemove = "xyz";
+            string outputFileName = "combined_test_file.txt";
+
+            // Записываем данные в временные файлы
+            File.WriteAllLines(fileNames[0], new[] { "abc123", "def456", "ghi789" });
+            File.WriteAllLines(fileNames[1], new[] { "jkl012", "mno345", "pqr678" });
+
+            // Вызываем метод объединения и удаления строк
+            int removedLinesCount = await Program.MergeFilesAndRemoveLines(outputFileName, patternToRemove);
+
+            // Проверяем количество удаленных строк
+            Assert.That(removedLinesCount, Is.EqualTo(0));
+
+            // Проверяем содержимое объединенного файла
+            string[] combinedLines = File.ReadAllLines(outputFileName);
+            Assert.That(combinedLines, Does.Contain("abc123"));
+            Assert.That(combinedLines, Does.Contain("def456"));
+            Assert.That(combinedLines, Does.Contain("ghi789"));
+            Assert.That(combinedLines, Does.Contain("jkl012"));
+            Assert.That(combinedLines, Does.Contain("mno345"));
+            Assert.That(combinedLines, Does.Contain("pqr678"));
+
+            // Удаляем временные файлы
+            File.Delete(fileNames[0]);
+            File.Delete(fileNames[1]);
+            File.Delete(outputFileName);
+        }
+
+       
+
+        private static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=oneHundredFilesInfo;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+
+        
     }
 }
