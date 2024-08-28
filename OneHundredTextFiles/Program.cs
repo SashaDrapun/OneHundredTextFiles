@@ -10,7 +10,7 @@ namespace OneHundredFiles
 {
     public class Program
     {
-        private static int totalFiles = 100;
+        private static int totalFiles = 20;
         private static int completedFiles = 0;
         private static int totalLines = 0;
         private static int processedLines = 0;
